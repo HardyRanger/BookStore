@@ -1,0 +1,28 @@
+﻿@model BookStore.Models.Category
+
+@{
+    ViewData["Title"] = "Delete Category";
+}
+@if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+{
+    <div class="alert alert-danger" role="alert">
+        @ViewBag.ErrorMessage
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <h2>Delete Category</h2>
+        <div>
+            <h4>Are you sure you want to delete this?</h4>
+            <div>
+                <h5>Name: @Model.Name</h5>
+            </div>
+            <form asp-action="DeleteConfirmed" method="post">
+                <input type="hidden" asp-for="Id" />
+                <button type="submit" class="btn btn-danger">Delete</button>
+                <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>

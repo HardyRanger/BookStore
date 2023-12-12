@@ -1,0 +1,54 @@
+﻿@inject UserManager<ApplicationUser> UserManager;
+@if (!User.Identity.IsAuthenticated)
+{
+    <div class="d-flex">
+        <a class="btn btn-outline-success my-2 my-sm-0 me-2" asp-controller="Account" asp-action="Login">
+            <i class="bi bi-box-arrow-in-right"></i> Log in
+        </a>
+        <a class="btn btn-outline-primary my-2 my-sm-0" asp-controller="Account" asp-action="Register">
+            <i class="bi bi-person-plus"></i> Sign Up
+        </a>
+    </div>
+}
+else
+{
+
+    <div class="d-flex align-items-center">
+        <ul class="navbar-nav me-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="profile-btn" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-person-badge"></i> @UserManager.GetUserAsync(User).Result.FullName
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profile-btn">
+                    <li>
+                        <a class="dropdown-item" href="/Orders/Index">
+                            <i class="bi bi-list"></i> Orders
+                        </a>
+                        @if (User.IsInRole("Admin"))
+                        {
+                        <li>
+                            <a class="dropdown-item" asp-controller="Account" asp-action="Users">
+                                <i class="bi bi-people"></i> Users
+                            </a>
+                        </li>
+                        }
+            </li>
+        </ul>
+        </li>
+        </ul>
+
+        <form action="@Url.Action("Index", "Book")" method="get" class="d-flex ms-3">
+            <input name="searchString" type="text" class="form-control me-2" placeholder="Search for a book..."
+                   aria-label="Search" aria-describedby="button-addon2">
+            <button class="btn btn-outline-success" type="submit">
+                <i class="bi bi-search"></i>
+            </button>
+        </form>
+
+        <form asp-controller="Account" asp-action="Logout" class="ms-2">
+            <button class="btn btn-outline-danger my-2 my-sm-0">
+                <i class="bi bi-box-arrow-in-right"></i> Log out
+            </button>
+        </form>
+    </div>
+}

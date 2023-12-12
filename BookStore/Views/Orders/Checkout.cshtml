@@ -1,0 +1,65 @@
+﻿@using BookStore.Data.ViewModels;
+@model CheckoutVM;
+
+@{
+    ViewData["Title"] = "Checkout";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h4 class="text-center mb-4">Checkout</h4>
+
+            <form asp-action="Checkout">
+
+                <div class="form-floating mb-3">
+                    <input asp-for="Name" class="form-control" id="Name" placeholder=" " />
+                    <label for="Name" class="form-label">Name</label>
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input asp-for="Email" class="form-control" id="Email" placeholder=" " />
+                    <label for="Email" class="form-label">Email</label>
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input asp-for="PhoneNumber" class="form-control" id="PhoneNumber" placeholder=" " />
+                    <label for="PhoneNumber" class="form-label">Phone Number</label>
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input asp-for="Address" class="form-control" id="Address" placeholder=" " />
+                    <label for="Address" class="form-label">Address</label>
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input asp-for="Province" class="form-control" id="Province" placeholder=" " />
+                    <label for="Province" class="form-label">Province</label>
+                    <span asp-validation-for="Province" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input asp-for="Country" class="form-control" id="Country" placeholder=" " />
+                    <label for="Country" class="form-label">Country</label>
+                    <span asp-validation-for="Country" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input asp-for="ZipCode" class="form-control" id="ZipCode" placeholder=" " />
+                    <label for="ZipCode" class="form-label">Zip Code</label>
+                    <span asp-validation-for="ZipCode" class="text-danger"></span>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button class="btn btn-success" type="submit">Checkout</button>
+                    <a class="btn btn-secondary" asp-controller="Orders" asp-action="ShoppingCart">Cancel</a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

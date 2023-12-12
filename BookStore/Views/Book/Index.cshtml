@@ -1,0 +1,102 @@
+﻿@model IEnumerable<Books>
+
+@{
+    ViewData["Title"] = "List of Books";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="custom-card">
+                    <div class="custom-card-header">
+                        <h5 class="card-title mb-0">
+                            @item.Name
+                            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                            {
+                                <a class="text-white float-right" asp-action="Edit" asp-route-id="@item.Id">
+                                    <i class="bi bi-pencil-square custom-black-icon"></i>
+                                </a>
+
+
+                            }
+                        </h5>
+                    </div>
+                    <div class="custom-card-body">
+                        <img src="@item.ImageURL" class="img-fluid" alt="@item.Name">
+                        <p class="card-text">@item.Description</p>
+                        <p class="card-text"><b>Book:</b> @item.Name</p>
+                        <p class="card-text"><b>Category:</b> @item.Category.Name</p>
+                        <p class="card-text"><b>Author:</b> @item.Author.FullName</p>
+                        <p class="card-text"><b>Start Date:</b> @item.StartDate.ToString("dd MMM yy")</p>
+                        <p class="card-text"><b>End Date:</b> @item.EndDate.ToString("dd MMM yy")</p>
+                        <p class="card-text">
+                            <b>Status:</b>
+                            @if (DateTime.Now >= item.StartDate && DateTime.Now <= item.EndDate)
+                            {
+                                <span class="badge bg-success text-white">For Sale</span>
+                            }
+                            else if (DateTime.Now > item.EndDate)
+                            {
+                                <span class="badge bg-danger text-white">Not For Sale</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-primary text-white">UPCOMING</span>
+                            }
+                        </p>
+                    </div>
+                    <div class="custom-card-footer">
+                        <p class="card-text">
+                            <a class="btn btn-primary" asp-action="Details" asp-route-id="@item.Id">Show Details</a>
+                            <a class="btn btn-success @((DateTime.Now > item.EndDate) ? "disabled" : "")"
+                               asp-controller="Orders"
+                               asp-action="AddItemToShoppingCart"
+                               asp-route-id="@item.Id">
+                                Add to Cart (Price @item.Price.ToString("c"))
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+@await Html.PartialAsync("_CreateItem", "Book")
+
+<style>
+    .custom-card {
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s ease-in-out;
+    }
+
+        .custom-card:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+    .custom-card-header {
+        background-color: #f0f0f0;
+        padding: 10px;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .custom-card-body {
+        text-align: center;
+    }
+
+    .custom-card-footer {
+        padding-top: 15px;
+        text-align: center;
+    }
+
+    .custom-black-icon {
+        color: black; 
+    }
+</style>
+
+
+

@@ -1,0 +1,48 @@
+﻿@using BookStore.Data.ViewModels;
+@model LoginVM;
+
+@{
+    ViewData["Title"] = "Log in to your account";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Log in to your account</h4>
+                </div>
+                <div class="card-body">
+
+                    @if (TempData["Error"] != null)
+                    {
+                        <div class="alert alert-danger" role="alert">
+                            <b>Sorry!</b> - @TempData["Error"]
+                        </div>
+                    }
+
+                    <form asp-action="Login">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <div class="mb-3">
+                            <label for="EmailAddress" class="form-label">Email Address</label>
+                            <input asp-for="EmailAddress" class="form-control" id="EmailAddress" />
+                            <span asp-validation-for="EmailAddress" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label for="Password" class="form-label">Password</label>
+                            <input asp-for="Password" type="password" class="form-control" id="Password" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-success" type="submit">Log in</button>
+                            <a class="btn btn-secondary" asp-controller="Account" asp-action="Login">Cancel</a>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
